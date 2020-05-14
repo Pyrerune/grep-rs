@@ -2,39 +2,9 @@ use std::io::{self, Read};
 use std::env::args;
 use std::process::exit;
 use std::fs::File;
-struct Options {
-    exclude: bool
-}
-impl Default for Options {
+use librgrep::Options;
+use librgrep::Searcher;
 
-    fn default() -> Options {
-        Options {
-            exclude: false
-        }
-    }
-}
-impl Options {
-    fn new(e: bool) -> Options {
-        Options {
-            exclude: e,
-        }
-    }
-}
-fn search_input(pattern: usize, list: Vec<&str>, args: Vec<String>, options: Options) -> io::Result<()> {
-
-    for i in list {
-        if options.exclude == false {
-            if i.contains(args[pattern].as_str()) {
-                println!("{}", i);
-            }
-        } else {
-            if !i.contains(args[pattern].as_str()) {
-                println!("{}", i);
-            }
-        }
-    }
-    Ok(())
-}
 fn process_args(option_arg: usize, file_arg: usize, buf: &mut String, args: Vec<String>) -> Options {
     let mut options = Options::default();
     let help_dialog = "RGREP: 0.1.0\nUsage: rgrep [options] pattern [file]\nDescription: A tool to find lines that contain the given pattern\nOptions:\n\n--help, -h: Prints this Message\n--exclude, -e: Displays all lines that do not contain the pattern";
@@ -78,6 +48,10 @@ fn main() -> io::Result<()>{
     if buf.is_empty() {
         let _  = io::stdin().read_to_string(&mut buf);
     }
-    let list: Vec<&str> = buf.split("\n").collect();
-    search_input(pattern_arg, list, args.clone(), options)
+    let searcher = Searcher::new(args[pattern_arg].clone(), buf.clone(), options.clone());
+    let output = searcher.search();
+    println!("{}", output);
+    //let list: Vec<&str> = buf.split("\n").collect();
+   // search_input(pattern_arg, list, args.clone(), options)
+   Ok(())
 }
