@@ -3,8 +3,8 @@ use std::io::{self, Read};
 use std::env::args;
 use std::process::exit;
 use std::fs::File;
-use libgrep_rs::Options;
-use libgrep_rs::Searcher;
+use libgrep_rs::searcher::Searcher;
+use libgrep_rs::options::Options;
 
 fn process_args(o: Vec<String>, file_arg: usize, buf: &mut String, args: Vec<String>) -> Options {
     let mut options = Options::default();
