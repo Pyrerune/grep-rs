@@ -1,5 +1,5 @@
 # grep-rs  
-A grep implementation in rust  
+A grep-like tool written in rust  
   
 #### Currently working features  
 Searching through files  
