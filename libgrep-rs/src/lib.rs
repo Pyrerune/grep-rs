@@ -1,5 +1,4 @@
-pub use rgrep::*;
-mod rgrep {
+
     #[derive(Clone)]
     pub struct Options {
         pub exclude: bool,
@@ -107,10 +106,9 @@ mod rgrep {
             return_string
         }
     }
-}
 #[cfg(test)]
 mod tests {
-    use crate::rgrep::*;
+    use crate::*;
     #[test]
     fn exclude() {
         let options = Options::new(true, false, false);

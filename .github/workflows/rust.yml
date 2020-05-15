@@ -16,4 +16,4 @@ jobs:
     - name: Build
       run: cargo build --verbose
     - name: Test
-      run: cd rgrep && cargo test --verbose > error.log
+      run: cd grep-rs && cargo test --verbose

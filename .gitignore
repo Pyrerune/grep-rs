@@ -1,7 +1,7 @@
-/librgrep/target
-/rgrep/.idea
-/rgrep/.vscode
-/rgrep/target
+/libgrep-rs/target
+/grep-rs/.idea
+/grep-rs/.vscode
+/grep-rs/target
 
 #Added by cargo
 #
