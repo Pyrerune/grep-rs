@@ -8,7 +8,7 @@ use libgrep_rs::options::Options;
 
 fn process_args(o: Vec<String>, file_arg: usize, buf: &mut String, args: Vec<String>) -> Options {
     let mut options = Options::default();
-    let help_dialog = "RGREP: 0.1.0\nUsage: rgrep [options] pattern [file]\nDescription: A tool to find lines that contain the given pattern\nOptions:\n\n--help, -h: Prints this Message\n--exclude, -e: Displays all lines that do not contain the pattern\n--include-before, -I: Displays all lines before the line including the pattern\n--include-after, -i: Displays all lines after the line including the pattern";
+    let help_dialog = "GREP-RS: 0.1.2\nUsage: grep-rs [options] pattern [file]\nDescription: A tool to find lines that contain the given pattern\nOptions:\n\n--help, -h: Prints this Message\n--exclude, -e: Displays all lines that do not contain the pattern\n--include-before, -I: Displays all lines before the line including the pattern\n--include-after, -i: Displays all lines after the line including the pattern";
     
     for i in o {
         match i.as_str() {
@@ -26,7 +26,6 @@ fn process_args(o: Vec<String>, file_arg: usize, buf: &mut String, args: Vec<Str
                 options.include_after = true;
             }
             "--case-insensitive" | "-c" => {
-                println!("test");
                 options.case_insensitive = true;
             }
             _ => {}
@@ -48,29 +47,21 @@ fn main() -> io::Result<()>{
 
     let mut pattern_arg = 1;
     let mut file_arg = 2;
-   /* while args[pattern_arg].starts_with("--") || args[pattern_arg].starts_with("-") {
-        options.push(args[pattern_arg].clone());
-        println!("{} {}", args.len(), pattern_arg);
-        if args.len() > pattern_arg {
-            pattern_arg+=1;
-        }
-        if args.len() > file_arg {
-            file_arg+=1;
-        }
-    }*/
+   
     for i in 0..args.len() {
         if args[i].starts_with("--") || args[i].starts_with("-") {
             
             options.push(args[i].clone());
+            if i == pattern_arg {
+                
             pattern_arg+=1;
             file_arg+=1;
-            println!("{}", pattern_arg);
+            }
         }
 
         
     }
 
-    println!("{}", args[file_arg]);
     let options = process_args(options, file_arg, &mut buf, args.clone());
 
 
@@ -80,7 +71,5 @@ fn main() -> io::Result<()>{
     let searcher = Searcher::new(args[pattern_arg].clone(), buf.clone(), options.clone());
     let output = searcher.search();
     println!("{}", output);
-    //let list: Vec<&str> = buf.split("\n").collect();
-   // search_input(pattern_arg, list, args.clone(), options)
    Ok(())
 }
