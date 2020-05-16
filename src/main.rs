@@ -25,6 +25,10 @@ fn process_args(o: Vec<String>, file_arg: usize, buf: &mut String, args: Vec<Str
             "--include-after" | "-i" => {
                 options.include_after = true;
             }
+            "--case-insensitive" | "-c" => {
+                println!("test");
+                options.case_insensitive = true;
+            }
             _ => {}
         }
     }
@@ -56,16 +60,17 @@ fn main() -> io::Result<()>{
     }*/
     for i in 0..args.len() {
         if args[i].starts_with("--") || args[i].starts_with("-") {
+            
             options.push(args[i].clone());
-            if i < pattern_arg {
-                pattern_arg+=1;
-                file_arg+=1;
-            } else if i > pattern_arg && i < file_arg {
-                file_arg+=1;
-            }
+            pattern_arg+=1;
+            file_arg+=1;
+            println!("{}", pattern_arg);
         }
+
         
     }
+
+    println!("{}", args[file_arg]);
     let options = process_args(options, file_arg, &mut buf, args.clone());
 
 
